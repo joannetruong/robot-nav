@@ -7,9 +7,8 @@ conda install -n $conda_env_name \
   -c pytorch -c nvidia -c conda-forge -c aihabitat -y
 
 # Install habitat-lab
-git clone git@github.com:facebookresearch/habitat-lab.git
+git clone --branch v0.2.3 git@github.com:facebookresearch/habitat-lab.git
 cd habitat-lab
-git checkout v0.2.3
 conda activate $conda_env_name
 pip install -e habitat-lab
 pip install -e habitat-baselines
