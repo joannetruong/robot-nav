@@ -1,11 +1,56 @@
 # @package _global_
 
 defaults:
-  - /benchmark/nav/pointnav: pointnav_gibson
+  - /benchmark/nav/pointnav: pointnav_hm3d
   - /habitat_baselines: habitat_baselines_rl_config_base
+  - /habitat/simulator/sim_sensors@habitat.simulator.agents.main_agent.sim_sensors.third_rgb_sensor: third_rgb_sensor
+  - override /habitat/simulator/agents@habitat.simulator.agents.main_agent: rgbd_agent
+  - override /habitat/task/actions:
+    - kinematic_velocity_control
+  - override /habitat/task/measurements:
+    - distance_to_goal
+    - collision_count
+    - backwards_motion_count
+    - success
+    - spl
+    - distance_to_goal_reward
+    - kinematic_nav_reward
   - _self_
 
+habitat:
+  task:
+    actions:
+      kinematic_velocity_control:
+        lin_vel_range: [ -0.5, 0.5 ]
+        ang_vel_range: [ -30.0, 30.0 ]
+        min_abs_lin_speed: 0.05  # meters/sec
+        min_abs_ang_speed: 3.0  # deg/sec
+        time_step: 1.0  # seconds
+        robot_urdf: "data/robots/hab_spot_arm/urdf/hab_spot_arm.urdf"
+        nominal_joints: [ 0, -180, 0, 135, 90, 0, -90, 0, 0, 60, -120, 0, 60, -120, 0, 60, -120, 0, 60, -120 ]
+        nominal_position: [ 0.0, 0.5, 0.0 ]  # horizontal, vertical, and forward axes
+        nominal_rotation: [ 0.0, 0.0, 180.0 ]  # roll, pitch, yaw in degrees
+    reward_measure: "kinematic_nav_reward"
+
+  gym:
+    obs_keys: [ "depth", "pointgoal_with_gps_compass"]
+  simulator:
+    habitat_sim_v0:
+      # Physics must be enabled for EmbodimentCollisionChecker to work (sim.contact_test)
+      enable_physics: True
+    agents:
+      main_agent:
+        sim_sensors:
+          depth_sensor:
+            position: [ 0.0, 0.5, -0.425 ]
+          third_rgb_sensor: # rgb camera behind robot for visualizing episode in color
+            height: 256
+            width: 256
+            position: [ 0.0, 1.4, 0.8 ]
+            orientation: [ -0.7, 0.0, 0.0 ]
+
 habitat_baselines:
+  video_render_views: ["third_rgb_sensor"]
   verbose: False
   trainer_name: "ddppo"
   torch_gpu_id: 0
@@ -25,6 +70,7 @@ habitat_baselines:
 
   rl:
     policy:
+      action_distribution_type: "gaussian"
       name: "PointNavResNetPolicy"
 
     ppo:
