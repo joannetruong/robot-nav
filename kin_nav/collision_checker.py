@@ -16,7 +16,6 @@ class EmbodimentCollisionChecker:
     ):
         self.sim = sim
 
-        # Extract data from Hydra config of embodiment
         if robot_id is None:
             ao_mgr = sim.get_articulated_object_manager()
             self.robot_id = ao_mgr.add_articulated_object_from_urdf(
