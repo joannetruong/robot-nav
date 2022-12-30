@@ -139,19 +139,18 @@ class KinematicVelocityAction(SimulatorTaskAction):
             self.max_ang_vel - self.min_ang_vel
         )
 
-        final_position, final_rotation, backwards, collided, stop = self.teleport(
+        final_pos, final_rot, backwards, collided, task.is_stop_called = self.teleport(
             linear_velocity, angular_velocity
         )
         self.update_metrics(collided, backwards)
         return self._sim.get_observations_at(
-            position=final_position,
-            rotation=final_rotation,
-            keep_agent_at_new_pose=not (collided or stop),
+            position=final_pos,
+            rotation=final_rot,
+            keep_agent_at_new_pose=not (collided or task.is_stop_called),
         )
 
     def update_metrics(self, collided, backwards_motion):
-        """ Hacky, but simple way to keep track of metrics needed for reward penalties
-        """
+        """Hacky, but simple way to keep track of metrics needed for reward penalties"""
         if not hasattr(self._sim, "kin_nav_metrics"):
             self._sim.kin_nav_metrics = {}
         self._sim.kin_nav_metrics["collided"] = collided
