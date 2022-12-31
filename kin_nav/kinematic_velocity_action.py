@@ -87,7 +87,7 @@ class KinematicVelocityAction(SimulatorTaskAction):
     def reset(
         self, task: EmbodiedTask, episode: NavigationEpisode, *args: Any, **kwargs: Any
     ):
-        task.is_stop_called = False  # type: ignore
+        task.is_stop_called = False
 
         # If robot hasn't spawned yet, or was removed when scene was reloaded
         if self.robot_id is None or self.robot_id.object_id == -1:
