@@ -21,9 +21,11 @@ You must have mamba installed. If you don't have it, you could use conda as a dr
 conda_env_name=robot_nav
 
 # Mamba is used for much, much faster installation.
+# PLEASE VERIFY THAT THE PYTORCH AND CUDA VERSION IS CORRECT FOR YOUR SYSTEM HERE:
+# https://pytorch.org/get-started/previous-versions/
 conda create -n $conda_env_name python=3.7 -y
 mamba install -n $conda_env_name \
-  habitat-sim=0.2.3 withbullet headless pytorch cudatoolkit=11.3 \
+  habitat-sim=0.2.3 withbullet headless pytorch=1.12.1 cudatoolkit=11.3 \
   -c pytorch -c nvidia -c conda-forge -c aihabitat -y
 ```
 2. Install this repo and habitat-lab:
