@@ -15,13 +15,13 @@ from habitat_sim import RigidState
 from habitat_sim._ext.habitat_sim_bindings import VelocityControl
 from hydra.core.config_store import ConfigStore
 
-from kin_nav.collision_checker import EmbodimentCollisionChecker
+from robot_nav.collision_checker import EmbodimentCollisionChecker
 
-SPOT_NOMINAL_JOINTS = [
+NOMINAL_JOINTS = [
     0, -180, 0, 135, 90, 0, -90, 0, 0, 60, -120, 0, 60, -120, 0, 60, -120, 0, 60, -120  # fmt: skip
 ]
-SPOT_NOMINAL_POSITION = [0.0, 0.5, 0.0]
-SPOT_NOMINAL_ROTATION = [0.0, 0.0, 180.0]  # roll, pitch, yaw in degrees
+NOMINAL_POSITION = [0.0, 0.5, 0.0]
+NOMINAL_ROTATION = [0.0, 0.0, 180.0]  # roll, pitch, yaw in degrees
 
 
 @dataclass
@@ -35,9 +35,9 @@ class KinematicVelocityControlActionConfig(ActionConfig):
     min_abs_ang_speed: float = 1.0  # deg/sec
     time_step: float = 1.0  # seconds
     robot_urdf: str = "data/robots/hab_spot_arm/urdf/hab_spot_arm.urdf"
-    nominal_joints: List[float] = field(default_factory=lambda: SPOT_NOMINAL_JOINTS)
-    nominal_position: List[float] = field(default_factory=lambda: SPOT_NOMINAL_POSITION)
-    nominal_rotation: List[float] = field(default_factory=lambda: SPOT_NOMINAL_ROTATION)
+    nominal_joints: List[float] = field(default_factory=lambda: NOMINAL_JOINTS)
+    nominal_position: List[float] = field(default_factory=lambda: NOMINAL_POSITION)
+    nominal_rotation: List[float] = field(default_factory=lambda: NOMINAL_ROTATION)
 
 
 @registry.register_task_action

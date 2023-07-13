@@ -1,11 +1,11 @@
 import setuptools
 
 setuptools.setup(
-    name="kin_nav",
+    name="robot_nav",
     version="0.1",
-    author="Naoki Yokoyama",
-    author_email="naokiyokoyama@github",
+    author="Joanne Truong",
+    author_email="joannetruong@github",
     description="Kinematic navigation training for habitat",
-    url="https://github.com/naokiyokoyama/kin_nav",
+    url="https://github.com/joannetruong/robot-nav",
     packages=setuptools.find_packages(),
 )

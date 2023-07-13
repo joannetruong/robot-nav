@@ -21,7 +21,7 @@ from habitat.tasks.nav.nav import NavigationEpisode
 from habitat_sim.errors import GreedyFollowerError
 from omegaconf import DictConfig
 
-from kin_nav.collision_checker import EmbodimentCollisionChecker
+from robot_nav.collision_checker import EmbodimentCollisionChecker
 
 parent_dir = osp.dirname(osp.dirname(osp.abspath(__file__)))
 with open(osp.join(parent_dir, "train_val_splits.yaml"), "r") as f:
@@ -331,17 +331,17 @@ if __name__ == "__main__":
         default="data/scene_datasets",
     )
     parser.add_argument(
-        "-o",
-        "--overrides",
-        nargs="*",
-        help="Modify config options from command line",
-    )
-    parser.add_argument(
         "-n",
         "--num_episodes_per_scene",
         type=int,
         help="Number of episodes per scene",
         default=1e3,
+    )
+    parser.add_argument(
+        "-o",
+        "--overrides",
+        nargs="*",
+        help="Modify config options from command line",
     )
     args = parser.parse_args()
     assert args.dataset_type in [
