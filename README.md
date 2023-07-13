@@ -23,9 +23,9 @@ conda_env_name=robot_nav
 # Mamba is used for much, much faster installation.
 # PLEASE VERIFY THAT THE PYTORCH AND CUDA VERSION IS CORRECT FOR YOUR SYSTEM HERE:
 # https://pytorch.org/get-started/previous-versions/
-conda create -n $conda_env_name python=3.7 -y
+conda create -n $conda_env_name python=3.9 -y
 mamba install -n $conda_env_name \
-  habitat-sim=0.2.3 withbullet headless pytorch=1.12.1 cudatoolkit=11.3 \
+  habitat-sim=0.2.4 withbullet headless pytorch=1.12.1 cudatoolkit=11.3 \
   -c pytorch -c nvidia -c conda-forge -c aihabitat -y
 ```
 2. Install this repo and habitat-lab:
@@ -35,7 +35,7 @@ conda activate $conda_env_name
 pip install -e .
 
 # Then, install habitat-lab
-git clone --branch v0.2.3 git@github.com:facebookresearch/habitat-lab.git
+git clone --branch v0.2.4 git@github.com:facebookresearch/habitat-lab.git
 cd habitat-lab
 pip install -e habitat-lab
 pip install -e habitat-baselines
@@ -140,8 +140,8 @@ data
 Here is an example command for training a policy:
 ```bash
 python -um robot_nav.run \
-    --exp-config=ver_hm3d_robot_nav.yaml \
-    --run-type train
+    --config-path=../ \
+    --config-name=ver_hm3d_robot_nav 
 ```
 
 # Citation

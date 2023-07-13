@@ -1,29 +1,17 @@
-from habitat_baselines.config.default import get_config
-from habitat_baselines.run import build_parser, execute_exp
-from omegaconf import OmegaConf
+import hydra
+from habitat.config.default import patch_config
+from habitat_baselines.run import execute_exp
+from omegaconf import DictConfig
 
 
-def main():
-    parser = build_parser()
-
-    args = parser.parse_args()
-    run_exp(**vars(args))
-
-
-def run_exp(exp_config: str, run_type: str, opts=None) -> None:
-    r"""Runs experiment given mode and config
-
-    Args:
-        exp_config: path to config file.
-        run_type: "train" or "eval".
-        opts: list of strings of additional config options.
-
-    Returns:
-        None.
-    """
-    config = get_config(exp_config, opts)
-    # print(OmegaConf.to_yaml(config))  # good for debugging
-    execute_exp(config, run_type)
+@hydra.main(
+    version_base=None,
+    config_path="../",
+    config_name="ver_hm3d_robot_nav",
+)
+def main(cfg: DictConfig):
+    cfg = patch_config(cfg)
+    execute_exp(cfg, "eval" if cfg.habitat_baselines.evaluate else "train")
 
 
 if __name__ == "__main__":
