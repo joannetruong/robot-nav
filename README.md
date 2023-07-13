@@ -138,7 +138,7 @@ data
 Here is an example command for training a policy:
 ```bash
 python -um robot_nav.run \
-    --exp-config=ver_robot_nav.yaml \
+    --exp-config=ver_hm3d_robot_nav.yaml \
     --run-type train
 ```
 

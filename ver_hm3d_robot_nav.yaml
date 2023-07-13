@@ -1,10 +1,15 @@
 # @package _global_
 
 defaults:
-  - /benchmark/nav/pointnav: pointnav_hm3d
+  - /habitat: habitat_config_base
+  - /habitat/task: pointnav
+  - /habitat/dataset/pointnav: hm3d
   - /habitat_baselines: habitat_baselines_rl_config_base
   - /habitat/simulator/sim_sensors@habitat.simulator.agents.main_agent.sim_sensors.third_rgb_sensor: third_rgb_sensor
-  - override /habitat/simulator/agents@habitat.simulator.agents.main_agent: rgbd_agent
+  - /habitat/simulator/sim_sensors@habitat.simulator.agents.main_agent.sim_sensors.spot_left_depth_sensor: spot_left_depth_sensor
+  - /habitat/simulator/sim_sensors@habitat.simulator.agents.main_agent.sim_sensors.spot_right_depth_sensor: spot_right_depth_sensor
+  - /habitat_baselines/rl/policy/obs_transforms:
+      - stitch_spot_front_vision
   - override /habitat/task/actions:
     - kinematic_velocity_control
   - override /habitat/task/measurements:
@@ -32,8 +37,6 @@ habitat:
         nominal_rotation: [ 0.0, 0.0, 180.0 ]  # roll, pitch, yaw in degrees
     reward_measure: "kinematic_nav_reward"
 
-  gym:
-    obs_keys: [ "depth", "pointgoal_with_gps_compass"]
   simulator:
     habitat_sim_v0:
       # Physics must be enabled for EmbodimentCollisionChecker to work (sim.contact_test)
@@ -41,8 +44,22 @@ habitat:
     agents:
       main_agent:
         sim_sensors:
-          depth_sensor:
-            position: [ 0.0, 0.5, -0.425 ]
+          spot_left_depth_sensor:
+            height: 212
+            width: 120
+            hfov: 58.286
+            min_depth: 0.0
+            max_depth: 3.5
+            position: [ -0.03740343144695029, 0.5, -0.4164822634134684 ]
+            orientation: [ -0.4415683, -0.57648225, 0.270526 ]
+          spot_right_depth_sensor:
+            height: 212
+            width: 120
+            hfov: 58.286
+            min_depth: 0.0
+            max_depth: 3.5
+            position: [ 0.03614789234067159, 0.5, -0.4164822634134684 ]
+            orientation: [ -0.4415683, 0.57648225, -0.270526 ]
           third_rgb_sensor: # rgb camera behind robot for visualizing episode in color
             height: 256
             width: 256
@@ -52,7 +69,7 @@ habitat:
 habitat_baselines:
   video_render_views: ["third_rgb_sensor"]
   verbose: False
-  trainer_name: "ddppo"
+  trainer_name: "ver"
   torch_gpu_id: 0
   tensorboard_dir: "tb"
   video_dir: "video_dir"
