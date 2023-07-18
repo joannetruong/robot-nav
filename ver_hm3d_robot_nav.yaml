@@ -29,7 +29,7 @@ habitat:
         ang_vel_range: [ -30.0, 30.0 ]
         min_abs_lin_speed: 0.05  # meters/sec
         min_abs_ang_speed: 3.0  # deg/sec
-        time_step: 1.0  # seconds
+        time_step: 0.5  # seconds
         robot_urdf: "data/robots/hab_spot_arm/urdf/hab_spot_arm.urdf"
         nominal_joints: [ 0, -180, 0, 135, 90, 0, -90, 0, 0, 60, -120, 0, 60, -120, 0, 60, -120, 0, 60, -120 ]
         nominal_position: [ 0.0, 0.5, 0.0 ]  # horizontal, vertical, and forward axes
@@ -68,7 +68,7 @@ habitat_baselines:
   video_dir: "video_dir"
   test_episode_count: -1
   eval_ckpt_path_dir: "data/new_checkpoints"
-  num_environments: 4
+  num_environments: 64
   checkpoint_folder: "data/new_checkpoints"
   num_updates: -1
   total_num_steps: 2.5e9
