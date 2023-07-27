@@ -122,10 +122,8 @@ class KinematicVelocityAction(SimulatorTaskAction):
         provided amount of time
 
         Args:
-            linear_velocity: between [-1,1], scaled according to
-                             config.lin_vel_range
-            angular_velocity: between [-1,1], scaled according to
-                             config.ang_vel_range
+            angular_velocity: between [-1,1], scaled according to config.ang_vel_range
+            linear_velocity: between [-1,1], scaled according to config.lin_vel_range
         """
         # Extract from single-value array and convert from [-1, 1] to [0, 1] range
         linear_velocity = (linear_velocity[0] + 1.0) / 2.0
