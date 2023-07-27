@@ -15,7 +15,7 @@ defaults:
     - distance_to_goal
     - collision_count
     - backwards_motion_count
-    - success
+    - auto_stop_success
     - spl
     - distance_to_goal_reward
     - kinematic_nav_reward
@@ -35,6 +35,9 @@ habitat:
         nominal_position: [ 0.0, 0.5, 0.0 ]  # horizontal, vertical, and forward axes
         nominal_rotation: [ 0.0, 0.0, 180.0 ]  # roll, pitch, yaw in degrees
     reward_measure: "kinematic_nav_reward"
+    measurements:
+      auto_stop_success:
+        success_distance: 0.425
 
   simulator:
     habitat_sim_v0:
